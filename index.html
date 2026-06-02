@@ -794,21 +794,24 @@ function loadPQ(){
   document.getElementById('next-pq-btn').style.display='none';
   document.querySelectorAll('.sign-btn').forEach(b=>b.disabled=false);
   pAttempt=0;
-  playAudio('gc_correct').catch(()=>{});
+  
 }
 
 function checkAns(chosen){
   const q=practiceQs[pqIdx];
   const fb=document.getElementById('practice-feedback');
   const sb=document.getElementById('psign-box');
+  const correctSounds=['gc_correct','gc_correct2','gc_correct3','gc_correct4','gc_correct5'];
+  const correctTexts=['🌟 Correct! Well done!','🌟 Good work!','🌟 Excellent!','🌟 Brilliant!','🌟 That is right!'];
   if(chosen===q.ans){
     score++;
+    const pick=Math.floor(Math.random()*correctSounds.length);
     sb.textContent=chosen;sb.classList.add('revealed');
-    fb.textContent='🌟 Correct! Well done!';fb.className='practice-feedback correct';
+    fb.textContent=correctTexts[pick];fb.className='practice-feedback correct';
     document.getElementById('dot-'+pqIdx).classList.add('correct');
     document.querySelectorAll('.sign-btn').forEach(b=>b.disabled=true);
     document.getElementById('next-pq-btn').style.display='inline-block';
-    playAudio('gc_correct');
+    playAudio(correctSounds[pick]);
   } else {
     pAttempt++;
     if(pAttempt<2){
